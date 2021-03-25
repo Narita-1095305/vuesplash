@@ -13,7 +13,7 @@ export function getCookieValue (searchKey) {
 
     document.cookie.split(';').forEach(cookie => {
         const [key, value] = cookie.split('=')
-        if(key === serachKey) {
+        if(key === searchKey) {
             return val = value
         }
     })
