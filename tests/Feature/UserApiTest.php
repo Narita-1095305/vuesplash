@@ -22,7 +22,7 @@ class UserApiTest extends TestCase
      */
 
      public function should_ログイン中のユーザを返却する(){
-         $response = $this->actiongAs($this->user)->json('GET', route('user'));
+         $response = $this->actingAs($this->user)->json('GET', route('user'));
 
          $response
             ->assertStatus(200)
@@ -36,7 +36,7 @@ class UserApiTest extends TestCase
      */
 
     public function should_ログインされていない場合は空文字を返却する(){
-        $response = $this->actiongAs($this->user)->json('GET', route('user'));
+        $response = $this->actingAs($this->user)->json('GET', route('user'));
 
         $response->assertStatus(200);
 

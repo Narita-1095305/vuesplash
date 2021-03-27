@@ -6,11 +6,14 @@ import router from './router'
 import store from './store'
 import App from './App.vue'
 
+const createApp = async () => {
+    new Vue({
+        el: '#app',
+        router,
+        store,
+        components: { App },
+        template: '<App />'
+    })
+}
 
-new Vue({
-    el: '#app',
-    router,
-    store,
-    components: { App },
-    template: '<App />'
-})
+createApp();
