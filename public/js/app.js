@@ -37774,6 +37774,10 @@ var createApp = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            _context.next = 2;
+            return _store__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch('auth/currentUser');
+
+          case 2:
             new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
               el: '#app',
               router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -37784,7 +37788,7 @@ var createApp = /*#__PURE__*/function () {
               template: '<App />'
             });
 
-          case 1:
+          case 3:
           case "end":
             return _context.stop();
         }
@@ -38117,6 +38121,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _pages_PhotoList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/PhotoList.vue */ "./resources/js/pages/PhotoList.vue");
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+
 
 
 
@@ -38127,7 +38133,14 @@ var routes = [{
   component: _pages_PhotoList_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/login',
-  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_4__["default"].getters['auth/check']) {
+      next('/');
+    } else {
+      next();
+    }
+  }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -38217,6 +38230,7 @@ var actions = {
   },
   logout: function logout(context) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -38225,9 +38239,10 @@ var actions = {
               return axios.post('/api/logout');
 
             case 2:
+              response = _context3.sent;
               context.commit('setUser', null);
 
-            case 3:
+            case 4:
             case "end":
               return _context3.stop();
           }

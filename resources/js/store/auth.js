@@ -28,7 +28,7 @@ const actions = {
     },
 
     async logout (context) {
-        await axios.post('/api/logout')
+        const response = await axios.post('/api/logout')
         context.commit('setUser', null)
     },
     async currentUser (context) {

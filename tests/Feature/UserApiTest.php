@@ -31,12 +31,12 @@ class UserApiTest extends TestCase
             ]);
      }
 
-         /**
+    /**
      * @test
      */
 
     public function should_ログインされていない場合は空文字を返却する(){
-        $response = $this->actingAs($this->user)->json('GET', route('user'));
+        $response = $this->json('GET', route('user'));
 
         $response->assertStatus(200);
 
