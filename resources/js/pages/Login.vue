@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     data() {
         return {
@@ -70,9 +71,16 @@ export default {
         },
         async login(){
             await this.$store.dispatch('auth/login', this.loginForm)
-
-            this.$router.push('/')
+            if(this.apiStatus){
+                this.$router.push('/')
+            }
         },
-    }
+    },
+    computed: {
+        ...mapState({
+            apiStatus: state => state.auth.apiStatus,
+            loginErrors: state => state.auth.loginErrorMessages
+        })
+    },
 }
 </script>

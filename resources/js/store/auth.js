@@ -1,5 +1,9 @@
+import { OK, UNPROCESSABLE_ENTITY } from '../util'
+
 const state = {
-    user: null
+    user: null,
+    apiStatus: null,
+    loginErrorMessages: null,
 }
 
 
@@ -12,6 +16,12 @@ const getters = {
 const mutations = {
     setUser(state, user){
         state.user = user
+    },
+    setApiStatus(state, status){
+        state.apiStatus = status
+    },
+    setLoginErrorMessages (state, messages) {
+        state.loginErrorMessages = messages
     }
 }
 
@@ -23,8 +33,22 @@ const actions = {
     },
 
     async login (context, data) {
+        context.commit('setApiStatus', null)
         const response = await axios.post('/api/login', data)
-        context.commit('setUser', response.data)
+          .catch(err => err.response || err)
+      
+        if (response.status === OK) {
+          context.commit('setApiStatus', true)
+          context.commit('setUser', response.data)
+          return false
+        }
+      
+        context.commit('setApiStatus', false)
+        if(response.status === UNPROCESSABLE_ENTITY){
+            context.commit('setLoginErrorMessages', response.data.errors)
+        }else{
+            context.commit('error/setCode', response.status, { root: true })
+        }
     },
 
     async logout (context) {
