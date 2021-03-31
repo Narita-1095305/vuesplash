@@ -6,11 +6,9 @@ use App\Photo;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\UplodedFile;
-use Illuminate\Support\Facades\schema;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
-
-
 use Tests\TestCase;
 
 class PhotoSubmitApiTest extends TestCase
@@ -32,13 +30,13 @@ class PhotoSubmitApiTest extends TestCase
 
         $response = $this->actingAs($this->user)
         ->json('POST', route('photo.create'), [
-            'photo' => UplodedFile::fake()->image('photo.jpg'),
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
         ]);
     $response->assertStatus(201);
 
     $photo = Photo::first();
 
-    $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
+    $this->assertMatchesRegularExpression('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
 
     Storage::cloud()->assertExists($photo->filename);
     }
@@ -50,16 +48,16 @@ class PhotoSubmitApiTest extends TestCase
     public function should_データベースエラーの場合はファイルを保存しない(){
         Schema::drop('photos');
 
-        Strage::fake('s3');
+        Storage::fake('s3');
 
         $response = $this->actingAs($this->user)
         ->json('POST', route('photo.create'), [
-            'photo' => UplodedFile::fake()->image('photo.jpg'),
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
         ]);
 
-        $response->assertStatus(501);
+        $response->assertStatus(500);
 
-        $this->assertEquals(0, count(Strage::cloud()->files()));
+        $this->assertEquals(0, count(Storage::cloud()->files()));
     }
 
     /**
@@ -73,7 +71,7 @@ class PhotoSubmitApiTest extends TestCase
         
         $response = $this->actingAs($this->user)
             ->json('POST', route('photo.create'), [
-                'photo' => UplodedFile::fake()->image('photo.jpg'),
+                'photo' => UploadedFile::fake()->image('photo.jpg'),
             ]);
         
         $response->assertStatus(500);
