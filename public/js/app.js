@@ -2107,6 +2107,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -2124,6 +2135,70 @@ __webpack_require__.r(__webpack_exports__);
     value: {
       type: Boolean,
       required: true
+    }
+  },
+  data: function data() {
+    return {
+      preview: null,
+      photo: null
+    };
+  },
+  methods: {
+    onFilechange: function onFilechange(event) {
+      var _this = this;
+
+      if (event.target.files.length === 0) {
+        this.reset();
+        return false;
+      }
+
+      if (!event.target.files[0].type.match('image.*')) {
+        this.reset();
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this.preview = e.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.photo = event.target.files[0];
+    },
+    reset: function reset() {
+      this.preview = '';
+      this.photo = null;
+      this.$el.querySelector('input[type="file"]').value = null;
+    },
+    submit: function submit() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('photo', _this2.photo);
+                _context.next = 4;
+                return axios.post('/api/photos', formData);
+
+              case 4:
+                response = _context.sent;
+
+                _this2.reset();
+
+                _this2.$emit('input', false);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -20946,7 +21021,33 @@ var render = function() {
     [
       _c("h2", { staticClass: "title" }, [_vm._v("Submit a photo")]),
       _vm._v(" "),
-      _vm._m(0)
+      _c(
+        "form",
+        {
+          staticClass: "form",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            staticClass: "form__item",
+            attrs: { type: "file" },
+            on: { change: _vm.onFilechange }
+          }),
+          _vm._v(" "),
+          _vm.preview
+            ? _c("output", { staticClass: "form__output" }, [
+                _c("img", { attrs: { src: _vm.preview, alt: "" } })
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
     ]
   )
 }
@@ -20955,16 +21056,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("form", { staticClass: "form" }, [
-      _c("input", { staticClass: "form__item", attrs: { type: "file" } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form__button" }, [
-        _c(
-          "button",
-          { staticClass: "button button--inverse", attrs: { type: "submit" } },
-          [_vm._v("submit")]
-        )
-      ])
+    return _c("div", { staticClass: "form__button" }, [
+      _c(
+        "button",
+        { staticClass: "button button--inverse", attrs: { type: "submit" } },
+        [_vm._v("submit")]
+      )
     ])
   }
 ]
@@ -38307,14 +38404,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/PhotoForm.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PhotoForm_vue_vue_type_template_id_516c053b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PhotoForm.vue?vue&type=template&id=516c053b& */ "./resources/js/components/PhotoForm.vue?vue&type=template&id=516c053b&");
 /* harmony import */ var _PhotoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PhotoForm.vue?vue&type=script&lang=js& */ "./resources/js/components/PhotoForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PhotoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PhotoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -38344,7 +38442,7 @@ component.options.__file = "resources/js/components/PhotoForm.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/PhotoForm.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
