@@ -1,0 +1,37 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Photo;
+use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+class PhotoListApiTest extends TestCase
+{
+    use RefleshDatabase;
+
+    /**
+     * @test
+    */
+
+    public function should_正しい構造のJSONを返却する(){
+
+        factory(Photo::class, 5)->create();
+
+        $response = $this->json('GET', route('photo.index'));
+
+        $photos = Photo::with(['owner'])->orderBy('created_at', 'desc')->get();
+
+        $expected_data = $photos->map(function ($photo){
+            return [
+                'id' => $photo->id,
+                'url' => $photo->url,
+                'owner' 
+            ];
+        })
+    }
+}
