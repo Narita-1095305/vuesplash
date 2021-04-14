@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class PhotoListApiTest extends TestCase
 {
-    use RefleshDatabase;
+    use RefreshDatabase;
 
     /**
-     * @test
+    * @test 
     */
 
     public function should_正しい構造のJSONを返却する(){
-
         factory(Photo::class, 5)->create();
 
         $response = $this->json('GET', route('photo.index'));
@@ -30,8 +29,16 @@ class PhotoListApiTest extends TestCase
             return [
                 'id' => $photo->id,
                 'url' => $photo->url,
-                'owner' 
+                'owner' => [
+                    'name' => $photo->owner->name,
+                ],
             ];
-        })
+        })->all();
+
+        $response -> assertStatus(200)
+            ->assertJsonCount(5, 'data')
+            ->assertJsonFragment([
+                "data" => $expected_data,
+            ]);
     }
 }
