@@ -21718,7 +21718,7 @@ var UNPROCESSABLE_ENTITY = 422;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/masahiro.harada/Projects/valet-park/vuesplash/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/vuesplash/vuesplash/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
