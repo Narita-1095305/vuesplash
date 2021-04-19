@@ -7,6 +7,20 @@
                 :alt="Photo by ${item.owner.name}"
             >
         </figure>
+        <RouterLink
+            class="photo__overlay"
+            :to="`/photos/${item.id}`"
+            :title="`View the photo by ${item.owner.name}`"
+        >
+            <div class="photo__controls">
+                <button
+                    class="photo__action photo__action--like"
+                    title="Like photo"
+                >
+                    <i class="icon ion-md-heart"></i>12
+                </button>
+            </div>
+        </RouterLink>
     </div>
 </template>
 
