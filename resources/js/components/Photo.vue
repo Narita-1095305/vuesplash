@@ -1,10 +1,10 @@
 <template>
     <div class="photo">
         <figure class="photo__wrapper">
-            <ing
+            <img
                 class="photo_image"
                 :src="item.url"
-                :alt="Photo by ${item.owner.name}"
+                :alt="`Photo by ${item.owner.name}`"
             >
         </figure>
         <RouterLink
@@ -25,7 +25,11 @@
                     @click.stop
                     :href="`/photos/${item.id}/download`"
                 >
-                <i class="icon ion-md-arrow-round-down">
+                <i class="icon ion-md-arrow-round-down"></i>
+                </a>
+            </div>
+            <div class="photo__username">
+                {{ item.owner.name }}
             </div>
         </RouterLink>
     </div>
