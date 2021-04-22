@@ -8,6 +8,7 @@
         :item="photo"
       />
     </div>
+    <Pagination :current-page="currentPage" :last-page="lastPage" />
   </div>
 </template>
 
@@ -32,11 +33,12 @@ export default {
     }
   },
   components: {
-    Photo
+    Photo,
+    Pagination
   },
   methods: {
     async fetchPhotos () {
-      const response = await axios.get('/api/photos')
+      const response = await axios.get(`/api/photos/?page=${this.page}`)
 
       if(response.status !== OK){
         this.$store.commit('error/setCode', response.status)

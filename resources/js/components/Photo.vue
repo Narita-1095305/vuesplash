@@ -2,7 +2,7 @@
     <div class="photo">
         <figure class="photo__wrapper">
             <img
-                class="photo_image"
+                class="photo__image"
                 :src="item.url"
                 :alt="`Photo by ${item.owner.name}`"
             >
