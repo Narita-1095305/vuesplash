@@ -30,6 +30,17 @@ class PhotoDetailApiTest extends TestCase
                 'owner' => [
                     'name' => $photo->owner->name,
                 ],
+                'comment' => $photo->comments
+                    ->sortByDesc('id')
+                    ->map(function ($comment){
+                        return [
+                            'author' => [
+                                'name' => $comment->author->name,
+                            ],
+                            'content' => $comment->content,
+                        ]
+                    })
+                    ->all(),
             ]);
     }
 }
