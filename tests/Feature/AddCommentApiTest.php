@@ -17,4 +17,11 @@ class AddCommentApiTest extends TestCase
 
         $this->user = factory(User::class)->create();
     }
+
+    /**
+     * @test
+     */
+
+     public function should_コメントを追加できる(){
+         
 }
