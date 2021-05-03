@@ -13,14 +13,13 @@ class Photo extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id','owner','url', 'comments',
+        'id', 'owner', 'url', 'comments',
     ];
 
     /** JSONに含める属性 */
     protected $appends = [
         'url',
     ];
-
 
     /** IDの桁数 */
     const ID_LENGTH = 12;
@@ -65,30 +64,29 @@ class Photo extends Model
     }
 
     /**
-    * リレーションシップ - usersテーブル
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
-
-    public function owner(){
-        return $this->belongsTo('App\User', 'user_id', 'id', 'id', 'users');
-    }
-
-    /**
-    * リレーションシップ - usersテーブル
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-
-    public function comments(){
-        return $this->hasMany('App\Comments')->orderBy('id', 'desc');
-    }
-
-    /**
-    * アクセサ - url
-    * @return string
-    */
-
-    public function getUrlAttribute(){
+     * アクセサ - url
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
         return Storage::cloud()->url($this->attributes['filename']);
     }
 
+    /**
+     * リレーションシップ - usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id', 'users');
+    }
+
+    /**
+     * リレーションシップ - commentsテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+    }
 }

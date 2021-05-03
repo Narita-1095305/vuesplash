@@ -4,25 +4,27 @@ namespace Tests\Feature;
 
 use App\Photo;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddCommentApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void{
+    public function setUp(): void
+    {
         parent::setUp();
 
+        // テストユーザー作成
         $this->user = factory(User::class)->create();
     }
 
     /**
      * @test
      */
-
-    public function should_コメントを追加できる(){
+    public function should_コメントを追加できる()
+    {
         factory(Photo::class)->create();
         $photo = Photo::first();
 
@@ -32,10 +34,11 @@ class AddCommentApiTest extends TestCase
             ->json('POST', route('photo.comment', [
                 'photo' => $photo->id,
             ]), compact('content'));
-        
+
         $comments = $photo->comments()->get();
 
         $response->assertStatus(201)
+            // JSONフォーマットが期待通りであること
             ->assertJsonFragment([
                 "author" => [
                     "name" => $this->user->name,
@@ -43,9 +46,9 @@ class AddCommentApiTest extends TestCase
                 "content" => $content,
             ]);
 
-            $this->assertEquals(1, $comments->count());
-
-            $this->assertEquals($content, $comments[0]->content);
+        // DBにコメントが1件登録されていること
+        $this->assertEquals(1, $comments->count());
+        // 内容がAPIでリクエストしたものであること
+        $this->assertEquals($content, $comments[0]->content);
     }
-         
 }

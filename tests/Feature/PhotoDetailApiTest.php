@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Comment;
 use App\Photo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -38,7 +39,7 @@ class PhotoDetailApiTest extends TestCase
                                 'name' => $comment->author->name,
                             ],
                             'content' => $comment->content,
-                        ]
+                        ];
                     })
                     ->all(),
             ]);
